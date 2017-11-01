@@ -21,12 +21,10 @@ class Network
 	
 		void update(int steps, double intensity);
 		int getNbConnexions();	
+		std::vector <Neuron*> getNetwork();
 		std::vector<int> randomChoice(int a, int b, int connexion, int x);
-		
-		void file(std::ofstream& fichier);
+	
 		
 	private:
-		std::vector <Neuron*> network;
-		
-		
+		std::vector <Neuron*> network;	
 }; 

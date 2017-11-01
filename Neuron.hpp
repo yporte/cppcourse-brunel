@@ -31,8 +31,9 @@ class Neuron
 		double backgroundNoise();
 		bool updateNeuronState(int time, double I);
 		void updateNeuronPotential(double I);
+		void updatePotentialWithPoisson(int time, double I);
 		bool isReceivingSignal(Neuron neuron);
-		void sendingMessage(Neuron* n);
+		void getMessage(Neuron* n);
 		void simulation(int simulation_time, double i_ext);
 		void addConnexions(int idx);
 		

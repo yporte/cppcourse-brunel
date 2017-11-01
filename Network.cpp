@@ -42,6 +42,12 @@ Network::~Network()
 }
 
 
+std::vector <Neuron*> Network::getNetwork()
+{
+	return network;
+}
+
+
 /**
  * update the network 
  *@param steps 
@@ -51,15 +57,18 @@ Network::~Network()
 void Network::update(int steps, double intensity)		
 {
 	//We update all the Neurons and check if they are connected or not
-	std::vector<int> targets;
 	for(auto& n : network){
-		targets = n->getConnexions();
-		for(auto t : targets){
-			n->sendingMessage(network[t]);
+		for(auto t : n->getConnexions()){
+			n->getMessage(network[t]);
 		}
 	}
+	for(auto& n: network){
+		n->updatePotentialWithPoisson(steps, intensity);
+	}
+	std::cout<<"potentiel:"<<network[1]->getPotential()<<"   spikes:"<<network[1]->getNbSpikes()<<"     time:"<< steps<<std::endl;
+	std::cout<<"potentiel:"<<network[2]->getPotential()<<"   spikes:"<<network[2]->getNbSpikes()<<"     time:"<< steps<<std::endl;
+	
 }
-
 
 
 int Network::getNbConnexions(){
@@ -90,14 +99,3 @@ std::vector<int> Network::randomChoice(int a, int b, int connexion, int x){
    
 }
 
-void Network::file(std::ofstream& fichier ){
-	
-	for (size_t i(0); i<network.size(); ++i){
-		for(auto t : network[i]->getTime()){
-			fichier<<t<<'\t'<<i<<'\n';
-		}
-	}
-	fichier.close();
-}
-
-	
