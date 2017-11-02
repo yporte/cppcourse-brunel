@@ -3,7 +3,11 @@
 //constructor
 Network::Network()
 {
-	network.clear();
+	for(auto& n : network){
+		delete n;
+		n=nullptr;
+	}
+	 
 	bool isExcitator=true;
 	for(int i(0);  i<NB_TOT; ++i){
 		if(i<NB_EXCITATOR){
@@ -17,12 +21,12 @@ Network::Network()
 	//choose random connexions 
 	std::vector<int> table;
 	for(size_t i(0); i < network.size(); ++i){
-		table = randomChoice(0,NB_EXCITATOR,CE,i);
+		table = randomChoice(0,NB_EXCITATOR,CE,i, true);
 		for (auto t : table){
 			network[i]->addConnexions(t);
 		}
 		table.clear();
-		table = randomChoice(NB_EXCITATOR,NB_EXCITATOR+NB_INHIBITOR, CI, i);
+		table = randomChoice(NB_EXCITATOR,NB_EXCITATOR+NB_INHIBITOR, CI, i, false);
 		for(auto t : table){
 			network[i]->addConnexions(t);
 		}
@@ -80,19 +84,24 @@ int Network::getNbConnexions(){
 }
 
 
-std::vector<int> Network::randomChoice(int a, int b, int connexion, int x){
+std::vector<int> Network::randomChoice(int a, int b, int connexion, int x, bool t){
 	std::default_random_engine random; 
+
     std::uniform_int_distribution<int> disN(a, b);
+    std::uniform_int_distribution<int> dis2N(a, b);
+    
     std::vector<int> table;
     table.clear(); //make sure there is nothing inside
 	int i(0);
 	do{
 		int aleatory(0);
-		aleatory = disN(random);
-		if(aleatory != x){
-			table.push_back(aleatory);
-			++i;
+		if(t==true){
+			aleatory = disN(random);
+		}else{
+			aleatory = dis2N(random);
 		}
+		table.push_back(aleatory);
+		++i;
 	} while (i < connexion);
 	
 	return table;

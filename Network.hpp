@@ -22,7 +22,7 @@ class Network
 		void update(int steps, double intensity);
 		int getNbConnexions();	
 		std::vector <Neuron*> getNetwork();
-		std::vector<int> randomChoice(int a, int b, int connexion, int x);
+		std::vector<int> randomChoice(int a, int b, int connexion, int x, bool t);
 	
 		
 	private:

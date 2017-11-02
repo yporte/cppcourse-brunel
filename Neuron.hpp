@@ -21,10 +21,9 @@ class Neuron
 		int getNbSpikes() const;
 		std::vector<double>  getTime() const;
 		std::vector<int> getConnexions() const;
+		int getConnexionsForOneNeuron() const;
 		bool isSpiking() const;
 		
-		//Setter
-		void setBuffer(int i, double potential);
 		
 		bool isExcitatory();
 		bool isRefractory();

@@ -17,14 +17,12 @@ int main()
 	}
 	
 
-
 	std::ofstream file;
 	std::string nom_de_fichier ("spikes.dat");
 	file.open(nom_de_fichier.c_str());
 	
 	for (size_t i(0); i<neuron.getNetwork().size(); ++i){
 		for(auto t : neuron.getNetwork()[i]->getTime()){
-			std::cout<<"spike"<<std::endl;
 			file<<t<<'\t'<<i<<'\n';
 		}
 	}

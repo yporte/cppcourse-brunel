@@ -38,16 +38,14 @@ std::vector<int> Neuron::getConnexions() const {
 	return connexions;
 }
 
+int Neuron::getConnexionsForOneNeuron() const{
+	return getConnexions().size();
+}
+
 //tells if the neron is spiking or not
 bool Neuron::isSpiking() const
 {
 	return state;
-}
-
-//set the neuron's buffer
-void Neuron::setBuffer(int i, double potential)
-{
-	buffer[i] +=potential;
 }
 
 bool Neuron::isExcitatory()
@@ -71,6 +69,8 @@ double Neuron::backgroundNoise()
 
 bool Neuron::updateNeuronState(int time, double I)
 {
+	
+	state=false; //the neuron isn't spiking
 	// if the membrane potential exceeds the threshold, we emit a spike
 	if (mb_potential >=V_TH) {
 		mb_potential = V_REST;
@@ -91,23 +91,23 @@ bool Neuron::updateNeuronState(int time, double I)
 	updateNeuronPotential(I);
 		
 	++clock_;
-	state=false; //the neuron isn't spiking
 	return state;
 }
 
 
 void Neuron::updateNeuronPotential(double I) 
 {
-	
+	//si le buffer du neurone post synaptique au pas de temps clock_ contient une valeur, on rajoute cette valeur au potentiel de membrane
+	if (buffer[clock_%(int)buffer.size()]!=0.0){
+		std::cout<<"BUFFER  "<<buffer[clock_%(int)buffer.size()]<<std::endl;
+		mb_potential +=(buffer[clock_%(int)buffer.size()]);
+		buffer[clock_%(int)buffer.size()]=0.0;
+		std::cout<<"BUFFER 2 "<<buffer[clock_%(int)buffer.size()]<<std::endl;
+	}
 	//calcul of the membrane potential
 	mb_potential=exp(-0.1/TAU)*mb_potential+ I*R*(1.0-exp(-0.1/TAU));
 	
-	
-	//si le buffer du neurone post synaptique au pas de temps clock_ contient une valeur, on rajoute cette valeur au potentiel de membrane
-	if (buffer[clock_%(int)buffer.size()]!=0.0){
-		mb_potential +=(buffer[clock_%(int)buffer.size()]);
-		buffer[clock_%(int)buffer.size()]=0;
-	}
+
 }
 
 void Neuron::updatePotentialWithPoisson(int time, double I)
@@ -128,7 +128,7 @@ void Neuron::getMessage(Neuron* n)
 		if(n->isExcitatory()==true){
 			buffer[(int)(clock_+(DELAY/STEP))%(int)buffer.size()]+=JE;
 		}else{
-			setBuffer(((int)(clock_+(DELAY/STEP))%(int)buffer.size()), JI);
+			buffer[(int)(clock_+(DELAY/STEP))%(int)buffer.size()]+= JI;
 		}
 	}
 }

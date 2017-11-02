@@ -50,6 +50,12 @@ TEST(NeuronTest, PotentialTest){
 	EXPECT_NEAR(20.0*(1.0-std::exp(0.1/20.0)),n.getPotential(),0.5);
 }
 
+TEST(NeuronTest, ConnexionsNeuron){
+	Network n;
+	EXPECT_EQ(n.getNetwork()[1]->getConnexionsForOneNeuron(), 1250);
+}
+
+
 int main(int argc, char**argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
