@@ -132,6 +132,7 @@ bool Neuron::updateNeuronState(int time, double I)
 	
 	//check if the neuron is refractorz	
 	if (isRefractory()) {
+		buffer[clock_%(int)buffer.size()]=0.0; //the buffer does not receive any message when the neuron is refractory
 		//the membrane potential is at zero while the neuron is refractory
 		mb_potential = V_REST;
 		--refractory_time;
@@ -155,7 +156,6 @@ void Neuron::updateNeuronPotential(double I)
 {
 	//if the neuron's buffer at the time ''clock_'' contains a value, we add this value to the membrane potential
 	if (buffer[clock_%(int)buffer.size()]!=0.0){
-		//std::cout << "buffer 1 : " << buffer[clock_%(int)buffer.size()] << std::endl;
 		mb_potential +=(buffer[clock_%(int)buffer.size()]);
 		buffer[clock_%(int)buffer.size()]=0.0;
 	}

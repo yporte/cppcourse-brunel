@@ -92,8 +92,6 @@ void Network::update(int time, double intensity)
 	for(auto& n: network){
 		n->updatePotentialWithPoisson(time, intensity);
 	}
-	//std::cout << "1: " << network[1]->getPotential() << "     "  << network[1]->getNbSpikes() << "    time : " << time << std::endl;
-	//std::cout << "2: " << network[2]->getPotential() << "     " << network[2]->getNbSpikes() << "    time : " << time << std::endl;
 }
 
 /**
