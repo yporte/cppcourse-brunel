@@ -9,7 +9,7 @@ cmake .
 make
 ./Neuron
 
-to get the image, go on jupyter, upload the file called "spikes.dat" which contains the values (number of spikes and time of spikes), and copy paste the lines (written in python) found in the file "image.txt"
+to get the image, go on https://cs116-plot.antoinealb.net/, upload the file called "spikes.dat" which contains the values (number of spikes and time of spikes), and submit
 
 to run the test, write on the terminal:
 cmake .
