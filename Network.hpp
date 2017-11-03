@@ -19,12 +19,16 @@ class Network
 		//Destructor
 		~Network();
 	
-		void update(int steps, double intensity);
+	
+		//Getter
 		int getNbConnexions();	
 		std::vector <Neuron*> getNetwork();
-		std::vector<int> randomChoice(int a, int b, int connexion, int x, bool t);
+		
+		void update(int time, double intensity);
+		
+		std::vector<int> randomChoice(int a, int b, int connexion, bool t);
 	
 		
 	private:
-		std::vector <Neuron*> network;	
-}; 
+		std::vector <Neuron*> network;	 //contains all the neuons of the simulation 
+};

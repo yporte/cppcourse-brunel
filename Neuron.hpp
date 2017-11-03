@@ -21,30 +21,32 @@ class Neuron
 		int getNbSpikes() const;
 		std::vector<double>  getTime() const;
 		std::vector<int> getConnexions() const;
-		int getConnexionsForOneNeuron() const;
 		bool isSpiking() const;
+		bool isExcitatory()const;
+		int getConnexionsForOneNeuron() const;
 		
-		
-		bool isExcitatory();
-		bool isRefractory();
-		double backgroundNoise();
+		//update
 		bool updateNeuronState(int time, double I);
 		void updateNeuronPotential(double I);
 		void updatePotentialWithPoisson(int time, double I);
-		bool isReceivingSignal(Neuron neuron);
+		
+		
+		bool isRefractory();
+		double backgroundNoise();
 		void getMessage(Neuron* n);
-		void simulation(int simulation_time, double i_ext);
 		void addConnexions(int idx);
+		void simulation(int simulation_time, double i_ext);
+		
 		
 	private:
-		double mb_potential;
-		int nb_spikes;
-		std::vector<double> time_spikes;
-		int clock_;
-		double refractory_time;
-		bool state; //if the neuron is spiking it's state is "1", else it is "0"
-		bool type;
-		std::array <double, 29> buffer;
-		std::vector<int> connexions;
+		double mb_potential;              //potential of the neuron's membrane
+		int nb_spikes;                    //number of spikes of the neuron
+		std::vector<double> time_spikes;  //stores the time of each spike
+		int clock_; 
+		double refractory_time;    
+		bool state;                       //if the neuron is spiking it's state is "1", else it is "0"
+		bool type;                        //tells if the neurone is excitator (true) of inhibitor(false)
+		std::array <double, 29> buffer;       
+		std::vector<int> connexions;       
 		
 };

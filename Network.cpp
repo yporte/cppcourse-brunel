@@ -1,32 +1,39 @@
 #include "Network.hpp"
 
-//constructor
+/**
+ * Constructor of network class
+ */
+ 
 Network::Network()
 {
+	//clear the network before filling it
 	for(auto& n : network){
 		delete n;
 		n=nullptr;
 	}
 	 
+	//fill the network 
 	bool isExcitator=true;
 	for(int i(0);  i<NB_TOT; ++i){
 		if(i<NB_EXCITATOR){
+			//add NB_EXCITATOR excitators neurons in the network
 			bool isExcitator=true;
 		}else{
+			//add (NB_TOT-NB_EXCITATOR) inhibitors neurons in the network
 			bool isExcitator=false;
 		}
 		network.push_back(new Neuron(isExcitator));
 	}
 	
-	//choose random connexions 
+	//choose randomly CE and CI connexions 
 	std::vector<int> table;
 	for(size_t i(0); i < network.size(); ++i){
-		table = randomChoice(0,NB_EXCITATOR,CE,i, true);
+		table = randomChoice(0,NB_EXCITATOR,CE, true);
 		for (auto t : table){
 			network[i]->addConnexions(t);
 		}
 		table.clear();
-		table = randomChoice(NB_EXCITATOR,NB_EXCITATOR+NB_INHIBITOR, CI, i, false);
+		table = randomChoice(NB_EXCITATOR,NB_EXCITATOR+NB_INHIBITOR, CI, false);
 		for(auto t : table){
 			network[i]->addConnexions(t);
 		}
@@ -34,7 +41,9 @@ Network::Network()
 	}
 }
 
-//destructor
+/**
+ * Destructor of network class
+ */
 
 Network::~Network()
 {
@@ -45,7 +54,9 @@ Network::~Network()
 	}
 }
 
-
+/**
+ * @return the network (the vectors containing all the neurons of the simulation) 
+ */
 std::vector <Neuron*> Network::getNetwork()
 {
 	return network;
@@ -53,28 +64,8 @@ std::vector <Neuron*> Network::getNetwork()
 
 
 /**
- * update the network 
- *@param steps 
- *@param intensity
- * */
-
-void Network::update(int steps, double intensity)		
-{
-	//We update all the Neurons and check if they are connected or not
-	for(auto& n : network){
-		for(auto t : n->getConnexions()){
-			n->getMessage(network[t]);
-		}
-	}
-	for(auto& n: network){
-		n->updatePotentialWithPoisson(steps, intensity);
-	}
-	std::cout<<"potentiel:"<<network[1]->getPotential()<<"   spikes:"<<network[1]->getNbSpikes()<<"     time:"<< steps<<std::endl;
-	std::cout<<"potentiel:"<<network[2]->getPotential()<<"   spikes:"<<network[2]->getNbSpikes()<<"     time:"<< steps<<std::endl;
-	
-}
-
-
+ *@return the number of connexions in the network
+*/
 int Network::getNbConnexions(){
 	int nb;
 	for (size_t i(0); i< network.size(); ++i){
@@ -84,25 +75,59 @@ int Network::getNbConnexions(){
 }
 
 
-std::vector<int> Network::randomChoice(int a, int b, int connexion, int x, bool t){
-	std::default_random_engine random; 
+/**
+ * this method updates the network 
+ *@param time : time of the simulation
+ *@param intensity: intensity of the current
+ */
+void Network::update(int time, double intensity)		
+{
+	//We update all the neurons of the network and check their connections
+	for(auto& n : network){
+		for(auto t : n->getConnexions()){
+			n->getMessage(network[t]);
+		}
+	}
+	for(auto& n: network){
+		n->updatePotentialWithPoisson(time, intensity);
+	}
+	std::cout<<"potentiel:"<<network[1]->getPotential()<<"   spikes:"<<network[1]->getNbSpikes()<<"     time:"<< time<<std::endl;
+	std::cout<<"potentiel:"<<network[2]->getPotential()<<"   spikes:"<<network[2]->getNbSpikes()<<"     time:"<< time<<std::endl;
+	
+}
 
-    std::uniform_int_distribution<int> disN(a, b);
+/**
+ *this method chooses random numbers between two bornes.
+ *@param a: lower borne
+ *@param b: higher borne
+ *@param connexion: the number of random numbers we want
+ *@param t: the type of the neuron (we distinguish if the neuron is excitator or inhibitor)  
+ *@return a vector<int> containing all the randomly choosen numbers 
+ */
+std::vector<int> Network::randomChoice(int a, int b, int connexion, bool t){
+	std::default_random_engine random; 
+	std::uniform_int_distribution<int> disN(a, b);
     std::uniform_int_distribution<int> dis2N(a, b);
     
+    //we declare a table that will store all the choosen numbers
     std::vector<int> table;
-    table.clear(); //make sure there is nothing inside
+    //we clear it
+    table.clear();
+     
 	int i(0);
 	do{
 		int aleatory(0);
+		//if the neuron is excitator
 		if(t==true){
 			aleatory = disN(random);
+		//if the neuron is inhibitor
 		}else{
 			aleatory = dis2N(random);
 		}
+		//ye add the randomly choosen number in the table
 		table.push_back(aleatory);
 		++i;
-	} while (i < connexion);
+	}while (i < connexion);
 	
 	return table;
    
