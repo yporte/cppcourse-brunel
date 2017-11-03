@@ -17,10 +17,10 @@ Network::Network()
 	for(int i(0);  i<NB_TOT; ++i){
 		if(i<NB_EXCITATOR){
 			//add NB_EXCITATOR excitators neurons in the network
-			bool isExcitator=true;
+			isExcitator=true;
 		}else{
 			//add (NB_TOT-NB_EXCITATOR) inhibitors neurons in the network
-			bool isExcitator=false;
+			isExcitator=false;
 		}
 		network.push_back(new Neuron(isExcitator));
 	}
@@ -39,6 +39,7 @@ Network::Network()
 		}
 		table.clear();
 	}
+	table.clear();
 }
 
 /**
@@ -91,9 +92,8 @@ void Network::update(int time, double intensity)
 	for(auto& n: network){
 		n->updatePotentialWithPoisson(time, intensity);
 	}
-	std::cout<<"potentiel:"<<network[1]->getPotential()<<"   spikes:"<<network[1]->getNbSpikes()<<"     time:"<< time<<std::endl;
-	std::cout<<"potentiel:"<<network[2]->getPotential()<<"   spikes:"<<network[2]->getNbSpikes()<<"     time:"<< time<<std::endl;
-	
+	//std::cout << "1: " << network[1]->getPotential() << "     "  << network[1]->getNbSpikes() << "    time : " << time << std::endl;
+	//std::cout << "2: " << network[2]->getPotential() << "     " << network[2]->getNbSpikes() << "    time : " << time << std::endl;
 }
 
 /**

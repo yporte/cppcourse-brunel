@@ -101,13 +101,12 @@ bool Neuron::isRefractory()
 double Neuron::backgroundNoise()
 {
 	//generates a background noise following a poisson distribution
-	std::random_device rd;  
-    std::mt19937 gen(rd());
-    std::poisson_distribution<> poissonGen(V_POISSON);
+	static std::random_device rd;  
+    static std::mt19937 gen(rd());
+    static std::poisson_distribution<> poissonGen(V_POISSON);
     //we multiply the random value by JE
     return (JE*poissonGen(rd));
 }
-
 
 /**
  *this method updates the state and the membrane potential of the neuron. 
@@ -119,8 +118,6 @@ double Neuron::backgroundNoise()
  */
 bool Neuron::updateNeuronState(int time, double I)
 {
-	
-	state=false; //the neuron isn't spiking
 	
 	// if the membrane potential exceeds the threshold, the neuron emits a spike
 	if (mb_potential >=V_TH) {
@@ -143,8 +140,9 @@ bool Neuron::updateNeuronState(int time, double I)
 	
 	//we update the membrane potential by calling another method	
 	updateNeuronPotential(I);
-		
+	
 	++clock_;
+	state=false; //the neuron isn't spiking
 	return state;
 }
 
@@ -157,10 +155,9 @@ void Neuron::updateNeuronPotential(double I)
 {
 	//if the neuron's buffer at the time ''clock_'' contains a value, we add this value to the membrane potential
 	if (buffer[clock_%(int)buffer.size()]!=0.0){
-		std::cout<<"BUFFER  "<<buffer[clock_%(int)buffer.size()]<<std::endl;
+		//std::cout << "buffer 1 : " << buffer[clock_%(int)buffer.size()] << std::endl;
 		mb_potential +=(buffer[clock_%(int)buffer.size()]);
 		buffer[clock_%(int)buffer.size()]=0.0;
-		std::cout<<"BUFFER 2 "<<buffer[clock_%(int)buffer.size()]<<std::endl;
 	}
 	//calcul of the membrane potential
 	mb_potential=exp(-0.1/TAU)*mb_potential+ I*R*(1.0-exp(-0.1/TAU));
@@ -204,7 +201,7 @@ void Neuron::getMessage(Neuron* n)
 /**
  * 
  *@param simulation_time :
- *@param i_ext : 
+ *@param i_ext : intensity of the external current
  */
 void Neuron::simulation(int simulation_time, double i_ext)
 {
@@ -217,7 +214,7 @@ void Neuron::simulation(int simulation_time, double i_ext)
 
 
 /**
- *this method add a connexion target
+ *this method adds a connexion target
  *@param
  */
 void Neuron::addConnexions(int idx) 

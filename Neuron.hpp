@@ -39,14 +39,14 @@ class Neuron
 		
 		
 	private:
+		bool state;                       //if the neuron is spiking it's state is "1", else it is "0"
+		std::array <double, 29> buffer;
+		bool type;  		              //tells if the neurone is excitator (true) of inhibitor(false)
 		double mb_potential;              //potential of the neuron's membrane
 		int nb_spikes;                    //number of spikes of the neuron
 		std::vector<double> time_spikes;  //stores the time of each spike
 		int clock_; 
-		double refractory_time;    
-		bool state;                       //if the neuron is spiking it's state is "1", else it is "0"
-		bool type;                        //tells if the neurone is excitator (true) of inhibitor(false)
-		std::array <double, 29> buffer;       
+		double refractory_time;           
 		std::vector<int> connexions;       
 		
 };
