@@ -20,3 +20,9 @@ to use the doxygen documentation :
 write on the terminal :
 make doc
 this will create an html file, open it, click on any folder (for example classNeuron.html)
+
+to change the external current of the simulation :
+in the main change the second parameter of the function updateStateWithPoisson
+
+to change the time of the simulation :
+change the constant T_STOP in the constant file 
