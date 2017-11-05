@@ -122,7 +122,7 @@ std::vector<int> Network::randomChoice(int a, int b, int connexion, bool t){
 		}else{
 			aleatory = dis2N(random);
 		}
-		//ye add the randomly choosen number in the table
+		//we add the randomly choosen number in the table
 		table.push_back(aleatory);
 		++i;
 	}while (i < connexion);

@@ -199,8 +199,7 @@ void Neuron::getMessage(Neuron* n)
 
 
 /**
- * 
- *@param simulation_time :
+ *@param simulation_time : duration of the simulation
  *@param i_ext : intensity of the external current
  */
 void Neuron::simulation(int simulation_time, double i_ext)
@@ -215,7 +214,7 @@ void Neuron::simulation(int simulation_time, double i_ext)
 
 /**
  *this method adds a connexion target
- *@param
+ *@param idx : we add a connexion in the vector containing all the connexions at the index ''idx''
  */
 void Neuron::addConnexions(int idx) 
 {

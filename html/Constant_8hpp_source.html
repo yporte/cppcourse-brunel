@@ -86,29 +86,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;constexpr <span class="keywordtype">double</span>  TAU(20.0);      </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> R(20.0);            <span class="comment">//membrane resistance                </span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;constexpr <span class="keywordtype">double</span> V_TH(20.0);     <span class="comment">//valeur seuil du potentiel de membrane </span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> V_REST(0.0);</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> DT(1);          <span class="comment">//pas de temps           </span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> REFRACT_TIME(3);   <span class="comment">//temps pendant lequel le neurone reste inactif apres un spike       </span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> T_STOP(300);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> T_START(0);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> STEP(0.1); </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> JE(0.1);  <span class="comment">//constant we add to the membrane potential if a neuron receives a signal from an excitatory neuron </span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> JI(-0.5);         <span class="comment">//constant we add to the membrane potential if a neuron receives a signal from an inhibitory neuron </span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> DELAY(1.5); <span class="comment">//delay after wich the post synaptic neuron responds  </span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> NB_EXCITATOR(10000);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> NB_INHIBITOR(2500);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> NB_TOT(12500);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;constexpr <span class="keywordtype">int</span> CE=(0.1*NB_EXCITATOR);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;constexpr <span class="keywordtype">int</span> CI=(0.1*NB_INHIBITOR);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;constexpr <span class="keywordtype">double</span> V_POISSON=(2*V_TH)/(0.2*TAU);</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;constexpr <span class="keywordtype">double</span>  TAU(20.0);                   <span class="comment">//membrane time constant</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> R(20.0);                          <span class="comment">//membrane resistance                </span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;constexpr <span class="keywordtype">double</span> V_TH(20.0);                   <span class="comment">//treshold value of the membrane potential (if the neuron&#39;s potential goes above it, the neuron spikes) </span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> V_REST(0.0);                      <span class="comment">//after a spike, the membrane potential goes to that value and stays to that value during the RERACT_TIME  </span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> DT(1);                            <span class="comment">//step time           </span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> REFRACT_TIME(3);                     <span class="comment">//time during which the neuron stays inactive after a spike       </span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> T_START(0);                          <span class="comment">//time to which we begin the simulation</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> T_STOP(1000);                        <span class="comment">//time to which we end the simulation</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> STEP(0.1);                        <span class="comment">//step</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> JE(0.1);                          <span class="comment">//constant we add to the membrane potential if a neuron receives a signal from an excitatory neuron </span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> JI(-0.5);                         <span class="comment">//constant we add to the membrane potential if a neuron receives a signal from an inhibitory neuron </span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">double</span> <span class="keyword">const</span> DELAY(1.5);                       <span class="comment">//delay after wich the post synaptic neuron responds to the presynaptic signal  </span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> NB_EXCITATOR(10000);                 <span class="comment">//total number of excitatories neurons in the simulation </span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> NB_INHIBITOR(2500);                  <span class="comment">//total number of inhibitories neurons in the simulation </span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">int</span> <span class="keyword">const</span> NB_TOT(12500);                       <span class="comment">//total number of neurons in the simulation </span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;constexpr <span class="keywordtype">int</span> CE=(0.1*NB_EXCITATOR);           <span class="comment">//number of connexions to excitatories neurons </span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;constexpr <span class="keywordtype">int</span> CI=(0.1*NB_INHIBITOR);           <span class="comment">//number of connexions to inhibitories neurons </span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;constexpr <span class="keywordtype">double</span> V_POISSON=(2*V_TH)/(0.2*TAU); <span class="comment">//parameter for the poisson distribution to generate the background noise</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 3 2017 13:15:38 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Nov 5 2017 14:28:30 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
