@@ -10,6 +10,7 @@ make
 ./Neuron
 
 to get the image, go on https://cs116-plot.antoinealb.net/, upload the file called "spikes.dat" which contains the values (number of spikes and time of spikes), and submit
+you can also do it directly in the terminal, using the python code written in the image.txt file (copy paste line by line in the terminal)
 
 to run the test, write on the terminal:
 cmake .
@@ -20,3 +21,21 @@ to use the doxygen documentation :
 write on the terminal :
 make doc
 this will create an html file, open it, click on any folder (for example classNeuron.html)
+
+to change the parameters of the simulation, change the constants in the file Constant.hpp. For example
+-change the constant T_STOP in the constant file 
+-change the constant G in the constant file
+-change the constant ETA in the constant file
+
+to change the external current of the simulation :
+in the main change the second parameter of the function updateStateWithPoisson
+
+after, recompile with make and execute the program.
+
+I executed my program with four differents sets of parameters:
+case1: G=3, ETA=2
+case2: G=6, ETA=4
+case3: G=5, ETA=2
+case4: G=4.5 ETA=0.9
+
+
