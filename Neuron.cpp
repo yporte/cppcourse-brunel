@@ -43,7 +43,7 @@ int Neuron::getNbSpikes() const
  getter
  *@return the time of the spikes
  */
-std::vector<double>  Neuron::getTime() const
+std::vector<double> Neuron::getTime() const
 {
 	return time_spikes;
 }
@@ -111,7 +111,7 @@ double Neuron::backgroundNoise()
 /**
  *this method updates the state and the membrane potential of the neuron. 
  *it checks if the potential reaches the treshold and if the neuron is refractory.
- * it does not take into account the background noise but it will be called in another method that will add the background noise
+ *it does not take into account the background noise but it will be called in another method that will add the background noise
  *@param time : time of the simulation
  *@param I : intensity of the external current
  *@return the state of the neuron (spiking or not spiking)  

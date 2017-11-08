@@ -19,7 +19,7 @@ class Neuron
 		//Getter
 		double getPotential() const;
 		int getNbSpikes() const;
-		std::vector<double>  getTime() const;
+		std::vector<double> getTime() const;
 		std::vector<int> getConnexions() const;
 		bool isSpiking() const;
 		bool isExcitatory()const;
@@ -50,3 +50,4 @@ class Neuron
 		std::vector<int> connexions;       
 		
 };
+

@@ -30,5 +30,6 @@ class Network
 	
 		
 	private:
-		std::vector <Neuron*> network;	 //contains all the neuons of the simulation 
+		std::vector <Neuron*> network;	 //contains all the neurons of the simulation 
+		 
 };

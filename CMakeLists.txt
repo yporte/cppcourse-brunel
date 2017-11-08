@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.6)
 
 project (Neuron)
-set(CMAKE_CXX_FLAGS "-W -Wall -pedantic -std=c++11")
+set(CMAKE_CXX_FLAGS "-W -Wall -pedantic -std=c++11 -g")
 
 enable_testing()
 add_subdirectory(gtest)
